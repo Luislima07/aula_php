@@ -11,7 +11,13 @@
                     <a class="nav-link" href="?p=home">Página Inicial</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?p=categoria/list">Categorias</a>
+                    <a class="nav-link" href="?p=categoria">Categorias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="?p=fornecedor">Fornecedores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="?p=cliente">Clientes</a>
                 </li>
             </ul>
         </div>

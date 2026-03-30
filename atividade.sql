@@ -1,0 +1,110 @@
+create TABLE categoria(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(100) not null,
+    informacoes text null
+) DELIMITER $ $ CREATE PROCEDURE salvar_categoria (
+    IN var_id int,
+    IN var_nome varchar(100),
+    IN informacoes text,
+) BEGIN IF EXISTS (
+    SELECT
+        id
+    from
+        categoria
+    WHERE
+        id = var_id
+) THEN
+UPDATE
+    categoria
+SET
+    nome = var_nome,
+    informacoes = var_informacoes,
+    id = var_id;
+
+END $ $ DELIMITER;
+
+create TABLE clientes(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(100) not null,
+    email text not null
+) DELIMITER $ $ CREATE PROCEDURE salvar_cliente(
+    IN var_id INT,
+    IN var_nome VARCHAR(100),
+    IN var_email TEXT
+) BEGIN IF EXISTS (
+    SELECT
+        id
+    FROM
+        clientes
+    WHERE
+        id = var_id
+) THEN
+UPDATE
+    clientes
+SET
+    nome = var_nome,
+    email = var_email
+WHERE
+    id = var_id;
+
+ELSE
+INSERT INTO
+    clientes (nome, email)
+VALUES
+    (var_nome, var_email);
+
+END IF;
+
+END $ $ DELIMITER;
+
+create TABLE fornecedor(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(100) not null,
+    cidade text not null
+) DELIMITER $ $ CREATE PROCEDURE salvar_fornecedor(
+    IN var_id INT,
+    IN var_nome VARCHAR(100),
+    IN var_cidade TEXT
+) BEGIN IF EXISTS (
+    SELECT
+        id
+    FROM
+        fornecedor
+    WHERE
+        id = var_id
+) THEN
+UPDATE
+    fornecedor
+SET
+    nome = var_nome,
+    cidade = var_cidade
+WHERE
+    id = var_id;
+
+ELSE
+INSERT INTO
+    fornecedor (nome, fornecedor)
+VALUES
+    (var_nome, var_fornecedor);
+
+END IF;
+
+END $ $ DELIMITER;
+
+Insert
+    / Atualizar Clientes: CALL salvar_cliente(NULL, 'João Silva', 'joao@gmail.com');
+
+CALL salvar_cliente(NULL, 'Maria Souza', 'maria@gmail.com');
+
+CALL salvar_cliente(NULL, 'Carlos Lima', 'carlos@gmail.com');
+
+CALL salvar_cliente(3, 'Carlos Lima', 'carlos.lima@gmail.com');
+
+Insert
+    / Atualizar Fornecedor: CALL salvar_fornecedor(NULL, 'Fornecedor Alfa', 'São Paulo');
+
+CALL salvar_fornecedor(NULL, 'Fornecedor Beta', 'Campinas');
+
+CALL salvar_fornecedor(NULL, 'Fornecedor Gama', 'Sorocaba');
+
+CALL salvar_fornecedor(3, 'Fornecedor Gama', 'Indaiatuba');

@@ -1,5 +1,5 @@
 <h3 class="mt-3 text-primary">
-    Categoria
+    Cliente
 </h3>
 
 <div class="card shadow mt-3"><!-- acrescentei um card com sombra aqui tbm -->
@@ -31,7 +31,7 @@
                     name="btnsalvar"
                     value="Cadastrar">
             </div>
-            <a href="?p=categoria" class="btn btn-danger">Cancelar</a>
+            <a href="?p=cliente" class="btn btn-danger">Cancelar</a>
         </div>
     </form>
 </div>
