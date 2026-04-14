@@ -108,3 +108,40 @@ CALL salvar_fornecedor(NULL, 'Fornecedor Beta', 'Campinas');
 CALL salvar_fornecedor(NULL, 'Fornecedor Gama', 'Sorocaba');
 
 CALL salvar_fornecedor(3, 'Fornecedor Gama', 'Indaiatuba');
+
+---------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE PROCEDURE listar_categoria (IN var_id INT)
+BEGIN
+	IF var_id IS NULL THEN
+    	SELECT * FROM categoria;
+    ELSE
+    	SELECT * FROM categoria WHERE id = var_id;
+    END IF;
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE listar_fornecedor (IN var_id INT)
+BEGIN
+	IF var_id IS NULL THEN
+    	SELECT * FROM fornecedor;
+    ELSE
+    	SELECT * FROM fornecedor WHERE id = var_id;
+    END IF;
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE listar_clientes (IN var_id INT)
+BEGIN
+	IF var_id IS NULL THEN
+    	SELECT * FROM clientes;
+    ELSE
+    	SELECT * FROM clientes WHERE id = var_id;
+    END IF;
+END$$
+DELIMITER ;
