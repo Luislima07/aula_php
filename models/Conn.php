@@ -4,8 +4,10 @@ class Conn extends PDO
 {
 
     private static $instancia;
+    //www.teste.com/banco
     private $host = "localhost";
     private $usuario = "root";
+    //usbw
     private $senha = "usbw";
     private $db = "bd_backend";
 
@@ -29,4 +31,3 @@ class Conn extends PDO
         return self::$instancia;
     }
 }
-

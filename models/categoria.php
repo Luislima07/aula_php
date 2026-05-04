@@ -2,6 +2,7 @@
 
 include_once 'Conn.php';
 
+//Extensão PHP Getters & Setters
 
 class Categoria
 {
@@ -15,19 +16,15 @@ class Categoria
         return $this->id;
     }
 
-    public function getNome()
-    {
-        return $this->nome;
-    }
-
-    public function getInformacoes(){
-        return $this->informacoes;
-    }
-
-     public function setId($id)
+    public function setId($id)
     {
         $this->id = $id;
         return $this;
+    }
+
+    public function getNome()
+    {
+        return $this->nome;
     }
 
     public function setNome($nome)
@@ -36,32 +33,27 @@ class Categoria
         return $this;
     }
 
+    public function getInformacoes()
+    {
+        return $this->informacoes;
+    }
+
     public function setInformacoes($informacoes)
     {
         $this->informacoes = $informacoes;
         return $this;
     }
 
-    public function salvar(){
-        try{
+    public function salvar()
+    {
+        try {
             $this->conn = new Conn();
-            $sql = 'CALL salvar_categoria(?, ?, ?)';
+            $sql = "CALL salvar_categoria(?, ?, ?)";
             $executar = $this->conn->prepare($sql);
             $executar->bindValue(1, $this->id);
             $executar->bindValue(2, mb_strtoupper($this->nome));
             $executar->bindValue(3, mb_strtoupper($this->informacoes));
             return $executar->execute() == 1 ? true : false;
-        }catch (PDOException $erro){
-            echo $erro->getMessage();
-        }
-    }
-    public function listar_categoria(){
-        try {
-            $this->conn = new Conn();
-            $sql = 'CALL listar_categoria(?)';
-            $executar = $this->conn->prepare($sql);
-            $executar->bindValue(1, $this->id);
-            return $executar->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $erro) {
             echo $erro->getMessage();
         }
