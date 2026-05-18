@@ -7,10 +7,10 @@ error_reporting(E_ALL);
     Categoria
 </h3>
 
-<div class="card shadow mt-3"><!-- acrescentei um card com sombra aqui tbm -->
-    <form method="post" name="formsalvar" id="formSalvar" class="m-3" enctype="multipart/form-data">
+<div class="card shadow mt-3 " >
+    <form method="post" name="formsalvar" id="formSalvar" class="m-3 gap-md-3" enctype="multipart/form-data">
 
-        <div class="form-group row">
+        <div class="form-group">
             <label for="txtnome" class="col-sm-2 col-form-label">
                 Nome
             </label>
@@ -19,7 +19,7 @@ error_reporting(E_ALL);
                     value="">
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group ">
             <label for="txtinformacoes" class="col-sm-2 col-form-label">
                 Informações
             </label>
@@ -28,15 +28,15 @@ error_reporting(E_ALL);
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group">
             <div class="col-sm-10">
                 <input type="submit"
                     class="btn btn-primary"
                     name="btnsalvar"
                     value="Cadastrar">
+                    <a href="?p=categorias" class="btn btn-danger">Cancelar</a>
             </div>
             <!-- faltou um link aqui-->
-            <a href="?p=categorias" class="btn btn-danger">Cancelar</a>
         </div>
     </form>
 </div>

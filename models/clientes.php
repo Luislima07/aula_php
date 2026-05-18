@@ -1,10 +1,13 @@
 <?php
 
+
+include_once 'Conn.php';
+header('Content-Type: text/html; charset=utf-8');
 class Clientes
 {
     private $id;
     private $nome;
-    private $cidade;
+    private $email;
     private $conn;
 
 
@@ -18,9 +21,9 @@ class Clientes
         return $this->nome;
     }
 
-    public function getCidade()
+    public function getEmail()
     {
-        return $this->cidade;
+        return $this->email;
     }
 
     public function setId($id)
@@ -35,9 +38,9 @@ class Clientes
         return $this;
     }
 
-    public function setCidade($cidade)
+    public function setEmail($email)
     {
-        $this->cidade = $cidade;
+        $this->email = $email;
         return $this;
     }
     public function salvar()
@@ -48,10 +51,21 @@ class Clientes
             $executar = $this->conn->prepare($sql);
             $executar->bindValue(1, $this->id);
             $executar->bindValue(2, mb_strtoupper($this->nome));
-            $executar->bindValue(3, mb_strtoupper($this->cidade));
+            $executar->bindValue(3, mb_strtoupper($this->email));
             return $executar->execute() == 1 ? true : false;
         } catch (PDOException $erro) {
             echo $erro->getMessage();
+        }
+    }
+    public function listar($var_id){
+        try {
+            $this->conn = new Conn();
+            $sql = "CALL listar_clientes(?)";
+            $executar = $this->conn->prepare($sql);
+            $executar->bindValue(1, $var_id);
+            return $executar->execute() == 1 ? $executar->fetchAll() : false; 
+        } catch (PDOException $error) {
+            echo $error->getMessage();
         }
     }
 }

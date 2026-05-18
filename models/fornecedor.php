@@ -57,4 +57,15 @@ class Fornecedor
             echo $erro->getMessage();
         }
     }
+    public function listar($var_id){
+        try{
+            $this->conn = new Conn();
+            $sql = "CALL listar_fornecedor(?)";
+            $executar = $this->conn->prepare($sql);
+            $executar->bindValue(1, $var_id);
+            return $executar->execute() == 1 ? $executar->fetchAll() : false;
+        }catch(PDOException $erro){
+              echo $erro->getMessage();
+        }
+    }
 }

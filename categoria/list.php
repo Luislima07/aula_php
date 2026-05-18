@@ -17,11 +17,45 @@
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
-                        <th>UF</th>
+                        <th>Informações</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                    include_once "../Php_proj_1\models\categoria.php";
+                    $cat = new Categoria();
+                    $dados = $cat->listar(null);
+                    foreach ($dados as $mostrar) {
+                    ?>
+                        <tr>
+                            <td>
+                                <?= $mostrar["id"] ?>
+                            </td>
+                            <td>
+                                <?= $mostrar["nome"] ?>
+                            </td>
+                            <td>
+                                <?= $mostrar["informacoes"] ?>
+                            </td>
+                            <td>
+                                <a
+                                    href="?p=categoria/editar&id=<?= $mostrar['id'] ?>"
+                                    class="btn btn-primary btn-sm">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+
+                                <a
+                                    href="?p=categoria/excluir&id=<?= $mostrar['id'] ?>"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Deseja realmente excluir esta categoria?')">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </a>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>

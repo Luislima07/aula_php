@@ -10,16 +10,16 @@
                 Nome
             </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="txtnome" name="txtnome" placeholder="Estado"
+                <input type="text" class="form-control" id="txtnome" name="txtnome" placeholder="Nome do Fornecedor"
                     value="">
             </div>
         </div>
         <div class="form-group row">
             <label for="inputText" class="col-sm-2 col-form-label">
-                Sigla - UF
+                Cidade - UF
             </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="txtsigla" name="txtsigla" placeholder="UF"
+                <input type="text" class="form-control" id="txtCidade" name="txtCidade" placeholder="Cidade"
                     value="">
             </div>
         </div>
@@ -34,4 +34,28 @@
             <a href="?p=fornecedor" class="btn btn-danger">Cancelar</a>
         </div>
     </form>
-</div>
+    <?php
+if (filter_input(INPUT_POST, 'btnsalvar')) {
+    $nome = filter_input(INPUT_POST, 'txtnome');
+    $cidade = filter_input(INPUT_POST, 'txtCidade');
+
+    include_once '../Php_proj_1\models\fornecedor.php';
+    $cat = new Fornecedor();
+    $cat->setId(NULL);
+    $cat->setNome($nome);
+    $cat->setCidade($cidade);
+
+    if ($cat->salvar()) {
+?>
+        <div class="alert alert-primary mt-3" role="alert">
+            Cidade - cadastro efetuado com sucesso.
+        </div>
+    <?php
+    } else {
+    ?>
+        <div class="alert alert-danger mt-3" role="alert">
+            Cidade - erro ao cadastrar.
+        </div>
+<?php
+    }
+}
