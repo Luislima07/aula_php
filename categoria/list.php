@@ -1,3 +1,4 @@
+
 <div class="alert alert-warning">
     <h3>Listar categorias</h3>
 </div>
@@ -23,7 +24,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    include_once "../Php_proj_1\models\categoria.php";
+                    include_once __DIR__ . '/../models/categoria.php';
                     $cat = new Categoria();
                     $dados = $cat->listar(null);
                     foreach ($dados as $mostrar) {
@@ -40,13 +41,13 @@
                             </td>
                             <td>
                                 <a
-                                    href="?p=categoria/editar&id=<?= $mostrar['id'] ?>"
+                                    href="?p=categoria/edit&id=<?= $mostrar['id'] ?>"
                                     class="btn btn-primary btn-sm">
                                     <i class="bi bi-pencil-square"></i> Editar
                                 </a>
 
                                 <a
-                                    href="?p=categoria/excluir&id=<?= $mostrar['id'] ?>"
+                                    href="?p=categoria/delete&id=<?= $mostrar['id'] ?>"
                                     class="btn btn-danger btn-sm"
                                     onclick="return confirm('Deseja realmente excluir esta categoria?')">
                                     <i class="bi bi-trash"></i> Excluir

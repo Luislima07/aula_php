@@ -46,7 +46,7 @@
                                 </a>
 
                                 <a
-                                    href="?p=categoria/excluir&id=<?= $mostrar['id'] ?>"
+                                    href="?p=fornecedor/delete&id=<?= $mostrar['id'] ?>"
                                     class="btn btn-danger btn-sm"
                                     onclick="return confirm('Deseja realmente excluir esta categoria?')">
                                     <i class="bi bi-trash"></i> Excluir

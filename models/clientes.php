@@ -8,6 +8,7 @@ class Clientes
     private $id;
     private $nome;
     private $email;
+    private $table = "clientes";
     private $conn;
 
 
@@ -66,6 +67,19 @@ class Clientes
             return $executar->execute() == 1 ? $executar->fetchAll() : false; 
         } catch (PDOException $error) {
             echo $error->getMessage();
+        }
+    }
+     public function deletar()
+    {
+        try {
+            $this->conn = new Conn();
+            $sql = "DELETE FROM {$this->table} where id = ?";
+            $executar = $this->conn->prepare($sql);
+            $executar->bindValue(1, $this->id);
+            return $executar->execute() == 1 ? true : false;
+        } catch (PDOException $erro) {
+
+            echo $erro->getMessage();
         }
     }
 }

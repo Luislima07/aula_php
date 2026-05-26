@@ -7,7 +7,7 @@ class Fornecedor
     private $id;
     private $nome;
     private $cidade;
-
+    private $table = "fornecedor";
     private $conn;
 
 
@@ -66,6 +66,19 @@ class Fornecedor
             return $executar->execute() == 1 ? $executar->fetchAll() : false;
         }catch(PDOException $erro){
               echo $erro->getMessage();
+        }
+    }
+        public function deletar()
+    {
+        try {
+            $this->conn = new Conn();
+            $sql = "DELETE FROM {$this->table} where id = ?";
+            $executar = $this->conn->prepare($sql);
+            $executar->bindValue(1, $this->id);
+            return $executar->execute() == 1 ? true : false;
+        } catch (PDOException $erro) {
+
+            echo $erro->getMessage();
         }
     }
 }

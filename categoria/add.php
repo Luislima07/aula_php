@@ -34,7 +34,7 @@ error_reporting(E_ALL);
                     class="btn btn-primary"
                     name="btnsalvar"
                     value="Cadastrar">
-                    <a href="?p=categorias" class="btn btn-danger">Cancelar</a>
+                    <a href="?p=categoria" class="btn btn-danger">Cancelar</a>
             </div>
             <!-- faltou um link aqui-->
         </div>
