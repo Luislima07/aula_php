@@ -40,7 +40,7 @@
                             </td>
                             <td>
                                 <a
-                                    href="?p=categoria/editar&id=<?= $mostrar['id'] ?>"
+                                    href="?p=fornecedor/edit&id=<?= $mostrar['id'] ?>"
                                     class="btn btn-primary btn-sm">
                                     <i class="bi bi-pencil-square"></i> Editar
                                 </a>

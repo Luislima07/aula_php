@@ -1,18 +1,28 @@
-    <?php
-    $id = filter_input(INPUT_GET, 'id');
+<?php
 
-    if ($id) {
-        include_once '/../models/categoria.php';
-        $cat = new Categoria();
-        $cat->setId($id);
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-        if ($cat->deletar()) {
-    ?>
-            <div class="alert alert-primary" role="alert">
-                Excluído com sucesso
-            </div>
-    <?php
-        }
+if ($id) {
+
+    include_once 'C:\Users\gl401\Downloads\usbwebserver\root\Php_proj_1\models\categoria.php';
+
+    $cat = new Categoria();
+    $cat->setId($id);
+
+    if ($cat->crudPhp("E")) {
+?>
+        <div class="alert alert-primary" role="alert">
+            Categoria excluída com sucesso.
+        </div>
+<?php
+    } else {
+?>
+        <div class="alert alert-danger" role="alert">
+            Erro ao excluir a categoria.
+        </div>
+<?php
     }
-    ?>
-    <meta http-equiv="refresh" CONTENT="1;URL=?p=categoria">
+}
+?>
+
+<meta http-equiv="refresh" content="1;URL=?p=categoria">
