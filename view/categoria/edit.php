@@ -3,15 +3,21 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include_once '../Php_proj_1/models/categoria.php';
+require_once __DIR__ . '/../../model/Categoria.php';
+require_once __DIR__ . '/../../dao/CategoriaDAO.php';
 
-$cat = new Categoria();
-
+$catDAO = new CategoriaDAO();
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$cat = null;
 
 if ($id) {
-    $cat->setId($id);
-    $dados = $cat->consultarPorID();
+    $cat = $catDAO->consultarPorID($id);
+}
+
+if (!$cat) {
+    echo '<div class="alert alert-danger mt-3">Categoria não encontrada.</div>';
+    echo '<a href="?p=categoria" class="btn btn-secondary">Voltar</a>';
+    return;
 }
 ?>
 
@@ -21,8 +27,18 @@ if ($id) {
 
 <div class="card shadow mt-3">
     <form method="post" class="m-3">
-
-        <input type="hidden" name="txtid" value="<?= $dados['id'] ?>">
+        <div class="form-group mb-3">
+            <label for="txtid">ID</label>
+            <input
+                type="text"
+                class="form-control"
+                id="txtid"
+                name="txtid"
+                value="<?= $cat->getId() ?>"
+                readonly
+                style="background-color: #e9ecef; cursor: not-allowed";
+                >
+        </div>
 
         <div class="form-group">
             <label for="txtnome">Nome</label>
@@ -31,7 +47,7 @@ if ($id) {
                 class="form-control"
                 id="txtnome"
                 name="txtnome"
-                value="<?= $dados['nome'] ?>"
+                value="<?= htmlspecialchars((string)$cat->getNome()) ?>"
                 required>
         </div>
 
@@ -42,7 +58,7 @@ if ($id) {
                 id="txtinformacoes"
                 name="txtinformacoes"
                 rows="3"
-                required><?= $dados['informacoes'] ?></textarea>
+                required><?= htmlspecialchars((string)$cat->getInformacoes()) ?></textarea>
         </div>
 
         <div class="mt-3">
@@ -64,11 +80,16 @@ if ($id) {
 
 if (filter_input(INPUT_POST, 'btnalterar')) {
 
-    $cat->setId(filter_input(INPUT_POST, 'txtid'));
-    $cat->setNome(filter_input(INPUT_POST, 'txtnome'));
-    $cat->setInformacoes(filter_input(INPUT_POST, 'txtinformacoes'));
+    $idPost = filter_input(INPUT_POST, 'txtid', FILTER_VALIDATE_INT);
+    $nomePost = filter_input(INPUT_POST, 'txtnome');
+    $infoPost = filter_input(INPUT_POST, 'txtinformacoes');
 
-    if ($cat->crudPhp("A")) {
+    $catEdit = new Categoria();
+    $catEdit->setId($idPost);
+    $catEdit->setNome($nomePost);
+    $catEdit->setInformacoes($infoPost);
+
+    if ($catDAO->salvar($catEdit)) {
         ?>
         <div class="alert alert-success mt-3">
             Categoria alterada com sucesso.

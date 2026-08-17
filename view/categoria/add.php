@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 ?>
 
 <h3 class="mt-3 text-primary">
-    Cliente
+    Categoria
 </h3>
 
 <div class="card shadow mt-3">
@@ -21,7 +21,7 @@ error_reporting(E_ALL);
                     class="form-control"
                     id="txtnome"
                     name="txtnome"
-                    placeholder="Cliente"
+                    placeholder="Categoria"
                     required>
             </div>
         </div>
@@ -49,7 +49,7 @@ error_reporting(E_ALL);
                     name="btnsalvar"
                     value="Cadastrar">
 
-                <a href="?p=cliente" class="btn btn-danger">
+                <a href="?p=categoria" class="btn btn-danger">
                     Cancelar
                 </a>
             </div>
@@ -65,23 +65,29 @@ if (filter_input(INPUT_POST, 'btnsalvar')) {
     $nome = filter_input(INPUT_POST, 'txtnome');
     $info = filter_input(INPUT_POST, 'txtinformacoes');
 
-    include_once '../Php_proj_1/models/clientes.php';
+    // Usa __DIR__ para caminhar corretamente a partir do diretório atual (view/categoria)
+    require_once __DIR__ . '/../../model/Categoria.php';
+    require_once __DIR__ . '/../../dao/CategoriaDAO.php';
 
-    $cat = new Clientes();
+    // Instancia o modelo e preenche os dados do formulário
+    $cat = new Categoria();
     $cat->setNome($nome);
-    $cat->setEmail($info);
+    $cat->setInformacoes($info);
 
-    if ($cat->crudPhp("I")) {
+    // Instancia a DAO e salva a categoria no banco de dados
+    $catDAO = new CategoriaDAO();
+
+    if ($catDAO->salvar($cat)) {
 ?>
         <div class="alert alert-success mt-3" role="alert">
-            Cliente cadastrada com sucesso.
+            Categoria cadastrada com sucesso.
         </div>
-        <meta http-equiv="refresh" content="1;URL=?p=cliente">
+        <meta http-equiv="refresh" content="1;URL=?p=categoria">
 <?php
     } else {
 ?>
         <div class="alert alert-danger mt-3" role="alert">
-            Erro ao cadastrar a cliente.
+            Erro ao cadastrar a categoria.
         </div>
 <?php
     }

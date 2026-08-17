@@ -1,24 +1,25 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if ($id) {
+    require_once __DIR__ . '/../../dao/ClienteDAO.php';
 
-    include_once 'C:\Users\gl401\Downloads\usbwebserver\root\Php_proj_1\models\clientes.php';
+    $clienteDAO = new ClienteDAO();
 
-    $cat = new Clientes();
-    $cat->setId($id);
-
-    if ($cat->crudPhp("E")) {
+    if ($clienteDAO->excluir($id)) {
 ?>
         <div class="alert alert-primary" role="alert">
-            Cliente excluída com sucesso.
+            Cliente excluído com sucesso.
         </div>
 <?php
     } else {
 ?>
         <div class="alert alert-danger" role="alert">
-            Erro ao excluir a categoria.
+            Erro ao excluir o cliente.
         </div>
 <?php
     }

@@ -1,12 +1,14 @@
-
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
 <div class="alert alert-warning">
     <h3>Listar categorias</h3>
 </div>
 
 <div class="col-sm-12 mb-4">
-
     <div class="card shadow mb-4">
-        <!-- striped é para zebrar as linhas, cada uma com uma cor-->
         <div class="table-responsive-sm mt-4">
             <h3 class="ml-3">
                 Listar Categorias
@@ -24,32 +26,23 @@
                 </thead>
                 <tbody>
                     <?php
-                    include_once __DIR__ . '/../models/categoria.php';
-                    $cat = new Categoria();
-                    $dados = $cat->listar(null);
+                    require_once __DIR__ . "/../../model/Categoria.php";
+                    require_once __DIR__ . "/../../dao/CategoriaDAO.php";
+
+                    $catDAO = new CategoriaDAO();
+                    $dados = $catDAO->listar();
+
                     foreach ($dados as $mostrar) {
                     ?>
                         <tr>
+                            <td><?= $mostrar["id"] ?></td>
+                            <td><?= $mostrar["nome"] ?></td>
+                            <td><?= $mostrar["informacoes"] ?></td>
                             <td>
-                                <?= $mostrar["id"] ?>
-                            </td>
-                            <td>
-                                <?= $mostrar["nome"] ?>
-                            </td>
-                            <td>
-                                <?= $mostrar["informacoes"] ?>
-                            </td>
-                            <td>
-                                <a
-                                    href="?p=categoria/edit&id=<?= $mostrar['id'] ?>"
-                                    class="btn btn-primary btn-sm">
+                                <a href="?p=categoria/edit&id=<?= $mostrar['id'] ?>" class="btn btn-primary btn-sm">
                                     <i class="bi bi-pencil-square"></i> Editar
                                 </a>
-
-                                <a
-                                    href="?p=categoria/delete&id=<?= $mostrar['id'] ?>"
-                                    class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Deseja realmente excluir esta categoria?')">
+                                <a href="?p=categoria/delete&id=<?= $mostrar['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir esta categoria?')">
                                     <i class="bi bi-trash"></i> Excluir
                                 </a>
                             </td>

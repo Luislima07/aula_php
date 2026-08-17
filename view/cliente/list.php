@@ -1,11 +1,14 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
 <div class="alert alert-warning">
-    <h3>Listar Cliente</h3>
+    <h3>Listar Clientes</h3>
 </div>
 
 <div class="col-sm-12 mb-4">
-
     <div class="card shadow mb-4">
-        <!-- striped é para zebrar as linhas, cada uma com uma cor-->
         <div class="table-responsive-sm mt-4">
             <h3 class="ml-3">
                 Listar Clientes
@@ -21,34 +24,26 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                  <tbody>
+                <tbody>
                     <?php
-                    include_once "../Php_proj_1\models\clientes.php";
-                    $cat = new Clientes();
-                    $dados = $cat->listar(null);
+                    require_once __DIR__ . "/../../model/Cliente.php";
+                    require_once __DIR__ . "/../../dao/ClienteDAO.php";
+                    
+                    $clienteDAO = new ClienteDAO();
+                    $dados = $clienteDAO->listar();
+                    
                     foreach ($dados as $mostrar) {
                     ?>
                         <tr>
+                            <td><?= $mostrar["id"] ?></td>
+                            <td><?= $mostrar["nome"] ?></td>
+                            <td><?= $mostrar["email"] ?></td>
                             <td>
-                                <?= $mostrar["id"] ?>
-                            </td>
-                            <td>
-                                <?= $mostrar["nome"] ?>
-                            </td>
-                            <td>
-                                <?= $mostrar["email"] ?>
-                            </td>
-                            <td>
-                                <a
-                                    href="?p=cliente/edit&id=<?= $mostrar['id'] ?>"
-                                    class="btn btn-primary btn-sm">
+                                <a href="?p=cliente/edit&id=<?= $mostrar['id'] ?>" class="btn btn-primary btn-sm">
                                     <i class="bi bi-pencil-square"></i> Editar
                                 </a>
 
-                                <a
-                                    href="?p=cliente/delete&id=<?= $mostrar['id'] ?>"
-                                    class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Deseja realmente excluir esta categoria?')">
+                                <a href="?p=cliente/delete&id=<?= $mostrar['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir este cliente?')">
                                     <i class="bi bi-trash"></i> Excluir
                                 </a>
                             </td>
@@ -62,4 +57,4 @@
     </div>
 </div>
 
-<a href="?p=cliente/add" title="Add Cliente">Add CLiente</a>
+<a href="?p=cliente/add" title="Add Cliente">Add Cliente</a>
