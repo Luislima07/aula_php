@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 ?>
 
@@ -65,27 +65,19 @@ if (filter_input(INPUT_POST, 'btnsalvar')) {
     $nome = filter_input(INPUT_POST, 'txtnome');
     $info = filter_input(INPUT_POST, 'txtinformacoes');
 
-    // Usa __DIR__ para caminhar corretamente a partir do diretório atual (view/categoria)
-    require_once __DIR__ . '/../../model/Categoria.php';
-    require_once __DIR__ . '/../../dao/CategoriaDAO.php';
+    require_once __DIR__ . '/../../controller/CategoriaController.php';
+    $categoriaController = new CategoriaController();
 
-    // Instancia o modelo e preenche os dados do formulário
-    $cat = new Categoria();
-    $cat->setNome($nome);
-    $cat->setInformacoes($info);
 
-    // Instancia a DAO e salva a categoria no banco de dados
-    $catDAO = new CategoriaDAO();
-
-    if ($catDAO->salvar($cat)) {
+    if ($categoriaController->salvar()) {
 ?>
         <div class="alert alert-success mt-3" role="alert">
             Categoria cadastrada com sucesso.
         </div>
         <meta http-equiv="refresh" content="1;URL=?p=categoria">
-<?php
+    <?php
     } else {
-?>
+    ?>
         <div class="alert alert-danger mt-3" role="alert">
             Erro ao cadastrar a categoria.
         </div>

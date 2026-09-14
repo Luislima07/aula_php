@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 ?>
 <div class="alert alert-warning">
@@ -12,7 +12,7 @@ error_reporting(E_ALL);
         <div class="table-responsive-sm mt-4">
             <h3 class="ml-3">
                 Listar Clientes
-                <a class="btn btn-success float-right mb-3 mr-3" href="?p=cliente/add"><i class="bi bi-database-fill-add"></i></a>
+                <a class="btn btn-success float-right mb-3 mr-3" href="?p=cliente/add"><i class="bi bi-person-fill-add"></i></a>
             </h3>
 
             <table class="table table-striped table-sm">
@@ -26,12 +26,11 @@ error_reporting(E_ALL);
                 </thead>
                 <tbody>
                     <?php
-                    require_once __DIR__ . "/../../model/Cliente.php";
-                    require_once __DIR__ . "/../../dao/ClienteDAO.php";
-                    
-                    $clienteDAO = new ClienteDAO();
-                    $dados = $clienteDAO->listar();
-                    
+                    include_once '../Php_proj_1/controller/ClienteController.php';
+
+                    $cliController = new ClienteController();
+                    $dados = $cliController->listar();
+
                     foreach ($dados as $mostrar) {
                     ?>
                         <tr>
@@ -42,7 +41,6 @@ error_reporting(E_ALL);
                                 <a href="?p=cliente/edit&id=<?= $mostrar['id'] ?>" class="btn btn-primary btn-sm">
                                     <i class="bi bi-pencil-square"></i> Editar
                                 </a>
-
                                 <a href="?p=cliente/delete&id=<?= $mostrar['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir este cliente?')">
                                     <i class="bi bi-trash"></i> Excluir
                                 </a>
@@ -57,4 +55,4 @@ error_reporting(E_ALL);
     </div>
 </div>
 
-<a href="?p=cliente/add" title="Add Cliente">Add Cliente</a>
+<a href="?p=cliente/add" title="Add clientes">Add Cliente</a>

@@ -1,17 +1,18 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../../model/Categoria.php';
-require_once __DIR__ . '/../../dao/CategoriaDAO.php';
+// Incluindo apenas o controller
+require_once __DIR__ . '/../../controller/CategoriaController.php';
 
-$catDAO = new CategoriaDAO();
+$catController = new CategoriaController();
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $cat = null;
 
 if ($id) {
-    $cat = $catDAO->consultarPorID($id);
+    // Usando o método consultarPorID original do seu sistema
+    $cat = $catController->buscarPorId($id);
 }
 
 if (!$cat) {
@@ -36,8 +37,7 @@ if (!$cat) {
                 name="txtid"
                 value="<?= $cat->getId() ?>"
                 readonly
-                style="background-color: #e9ecef; cursor: not-allowed";
-                >
+                style="background-color: #e9ecef; cursor: not-allowed;">
         </div>
 
         <div class="form-group">
@@ -77,31 +77,22 @@ if (!$cat) {
 </div>
 
 <?php
-
 if (filter_input(INPUT_POST, 'btnalterar')) {
 
-    $idPost = filter_input(INPUT_POST, 'txtid', FILTER_VALIDATE_INT);
-    $nomePost = filter_input(INPUT_POST, 'txtnome');
-    $infoPost = filter_input(INPUT_POST, 'txtinformacoes');
-
-    $catEdit = new Categoria();
-    $catEdit->setId($idPost);
-    $catEdit->setNome($nomePost);
-    $catEdit->setInformacoes($infoPost);
-
-    if ($catDAO->salvar($catEdit)) {
-        ?>
+    // Utilizando o método alterar do Controller
+    if ($catController->alterar()) {
+?>
         <div class="alert alert-success mt-3">
             Categoria alterada com sucesso.
         </div>
         <meta http-equiv="refresh" content="1;URL=?p=categoria">
-        <?php
+    <?php
     } else {
-        ?>
+    ?>
         <div class="alert alert-danger mt-3">
             Erro ao alterar a categoria.
         </div>
-        <?php
+<?php
     }
 }
 ?>

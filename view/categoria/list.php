@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 ?>
 <div class="alert alert-warning">
@@ -26,11 +26,10 @@ error_reporting(E_ALL);
                 </thead>
                 <tbody>
                     <?php
-                    require_once __DIR__ . "/../../model/Categoria.php";
-                    require_once __DIR__ . "/../../dao/CategoriaDAO.php";
+                    include_once '../Php_proj_1/controller/CategoriaController.php';
 
-                    $catDAO = new CategoriaDAO();
-                    $dados = $catDAO->listar();
+                    $catController = new CategoriaController();
+                    $dados = $catController->listar();
 
                     foreach ($dados as $mostrar) {
                     ?>

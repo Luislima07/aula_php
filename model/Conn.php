@@ -8,7 +8,7 @@ class Conn extends PDO
     private $host = "localhost";
     private $usuario = "root";
     //usbw
-    private $senha = "usbw";
+    private $senha = "";
     private $db = "bd_backend";
 
     public function __construct()
