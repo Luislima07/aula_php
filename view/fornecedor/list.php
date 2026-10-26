@@ -15,28 +15,44 @@ error_reporting(E_ALL);
                 <a class="btn btn-success float-right mb-3 mr-3" href="?p=fornecedor/add"><i class="bi bi-truck"></i></a>
             </h3>
 
+            <?php
+            include_once __DIR__ . '/../../controller/FornecedorController.php';
+            $fornController = new FornecedorController();
+            $termo = trim((string) filter_input(INPUT_GET, 'q'));
+            $dados = $termo === '' ? $fornController->listar() : $fornController->pesquisar($termo);
+            ?>
+            <form method="get" action="index.php" class="row g-2 mx-3 mb-3">
+                <input type="hidden" name="p" value="fornecedor">
+                <div class="col-sm-8 col-md-6">
+                    <label for="pesquisa-fornecedor" class="form-label">Pesquisar fornecedor</label>
+                    <input type="search" id="pesquisa-fornecedor" name="q" class="form-control"
+                        placeholder="Digite a razão social" value="<?= htmlspecialchars($termo, ENT_QUOTES, 'UTF-8') ?>">
+                </div>
+                <div class="col-auto align-self-end">
+                    <button type="submit" class="btn btn-primary">Pesquisar</button>
+                    <?php if ($termo !== ''): ?>
+                        <a href="?p=fornecedor" class="btn btn-outline-secondary">Limpar</a>
+                    <?php endif; ?>
+                </div>
+            </form>
+
             <table class="table table-striped table-sm">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
+                        <th>Razão Social</th>
                         <th>Cidade</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    include_once '../Php_proj_1/controller/FornecedorController.php';
-
-                    $fornController = new FornecedorController();
-                    $dados = $fornController->listar();
-
                     foreach ($dados as $mostrar) {
                     ?>
                         <tr>
-                            <td><?= $mostrar["id"] ?></td>
-                            <td><?= $mostrar["nome"] ?></td>
-                            <td><?= $mostrar["cidade"] ?></td>
+                            <td><?= (int) $mostrar["id"] ?></td>
+                            <td><?= htmlspecialchars($mostrar["nome"], ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($mostrar["cidade"], ENT_QUOTES, 'UTF-8') ?></td>
                             <td>
                                 <a href="?p=fornecedor/edit&id=<?= $mostrar['id'] ?>" class="btn btn-primary btn-sm">
                                     <i class="bi bi-pencil-square"></i> Editar
@@ -46,6 +62,11 @@ error_reporting(E_ALL);
                                 </a>
                             </td>
                         </tr>
+                    <?php
+                    }
+                    if (!$dados) {
+                    ?>
+                        <tr><td colspan="4" class="text-center">Nenhum fornecedor encontrado.</td></tr>
                     <?php
                     }
                     ?>

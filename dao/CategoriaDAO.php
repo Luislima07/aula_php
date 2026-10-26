@@ -31,6 +31,18 @@ class CategoriaDAO
         return $executar->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function pesquisar(string $nome): array
+    {
+        $sql = "SELECT * FROM {$this->table}
+                WHERE nome LIKE ?
+                ORDER BY nome";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(1, '%' . trim($nome) . '%', PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function consultarPorID(int $id): ?Categoria
     {
         $sql = "SELECT * FROM {$this->table} WHERE id = ?";
